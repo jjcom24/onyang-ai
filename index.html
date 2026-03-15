@@ -347,20 +347,23 @@
 
 
     #portfolio-section {
-            padding: 100px 24px;
-            background-color: var(--section-bg);
+             width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 20px;
             position: relative;
+            z-index: 2;
         }
 
         .pf-container {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
         /* 메인 타이틀 */
         .pf-header {
             text-align: center;
-            margin-bottom: 80px;
+            margin-bottom: 40px;
         }
 
         .pf-badge {
@@ -389,8 +392,8 @@
             background: var(--glass-bg);
             border: 1px solid rgba(255, 204, 0, 0.3);
             border-radius: 32px;
-            padding: 40px;
-            margin-bottom: 60px;
+            padding: 20px;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
             gap: 30px;
@@ -449,13 +452,13 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 20px;
-            margin-bottom: 80px;
+            margin-bottom: 20px;
         }
 
         .pf-road-card {
             background: var(--glass-bg);
             border: 1px solid rgba(255,255,255,0.05);
-            padding: 40px 30px;
+            padding: 20px 30px;
             border-radius: 24px;
             text-align: center;
             transition: 0.3s ease;
@@ -494,7 +497,7 @@
         /* 하단 액션 섹션 */
         .pf-cta-box {
             background: linear-gradient(145deg, rgba(15,23,42,0.8), rgba(2,6,23,0.9));
-            padding: 60px 40px;
+            padding: 20px 40px;
             border-radius: 40px;
             text-align: center;
             border: 1px solid rgba(255,255,255,0.05);
@@ -620,7 +623,7 @@
             vertical-align: top;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 968px) {
             .pf-roadmap { grid-template-columns: 1fr; }
             .pf-master-key { flex-direction: column; text-align: center; }
             .pf-master-key::before { display: none; } /* 모바일에서 열쇠 배경 숨김 */
@@ -754,7 +757,7 @@
                             <div class="step-circle">2년차</div>
                             <div class="step-content">
                                 <span class="step-year"><i class="fa-solid fa-chart-line"></i> 2027년 (성장기)</span>
-                                <p class="step-desc">AI 중점반(2학년 1학급)을 본격 운영하며 고성능 노트북 및 휴머노이드 로봇 등 최첨단 AI 교육 교구를 확충하여 실습 중심 교육을 강화합니다.</p>
+                                <p class="step-desc">AI 중점반(2학년 1학급)을 본격 운영하며 고성능 GPU 서버 및 로봇 등 최첨단 AI 교육 교구를 확충하여 실습 중심 교육을 강화합니다.</p>
                             </div>
                         </div>
                         <!-- 3년차 -->

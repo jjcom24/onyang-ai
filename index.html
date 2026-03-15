@@ -1208,15 +1208,36 @@
             else if (e.deltaY < -50) goToSection(currentIndex - 1);
         }, { passive: true });
 
-        async function callGemini(prompt) {
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            async function callGemini(prompt) {
+            // 1. 가장 안정적인 최신 모델로 고정
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
             const payload = { contents: [{ parts: [{ text: prompt }] }] };
+            
             try {
-                const response = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                const response = await fetch(url, { 
+                    method: 'POST', 
+                    headers: { 'Content-Type': 'application/json' }, 
+                    body: JSON.stringify(payload) 
+                });
                 const result = await response.json();
-                return result.candidates?.[0]?.content?.parts?.[0]?.text || "일시적 오류입니다.";
-            } catch (e) { return "연결 실패."; }
+                
+                // 2. 구글 서버에서 에러를 반환했을 때 화면에 이유를 출력
+                if (!response.ok) {
+                    console.error("API 에러 상세정보:", result);
+                    // API 키 정지, 할당량 초과, 권한 부족 등의 진짜 이유가 화면에 뜹니다.
+                    return `🚨 API 오류 발생: ${result.error?.message || response.statusText}`;
+                }
+
+                // 3. 정상 작동 시 결과 반환
+                return result.candidates?.[0]?.content?.parts?.[0]?.text || "응답을 생성할 수 없습니다.";
+                
+            } catch (e) { 
+                // 4. 네트워크 연결 자체에 실패했을 때
+                console.error("통신 에러:", e);
+                return `🚨 네트워크 통신 오류: ${e.message}`; 
+            }
         }
+
 
         async function generateRoadmap() {
             const interest = document.getElementById('ai-interest').value;

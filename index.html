@@ -1208,34 +1208,17 @@
             else if (e.deltaY < -50) goToSection(currentIndex - 1);
         }, { passive: true });
 
-           async function callGemini(prompt) {
-            // 모델명을 가장 호환성이 높은 최신 범용 모델(gemini-2.0-flash)로 변경했습니다.
-            // 만약 이것도 안 된다면 'gemini-2.0-flash' 부분을 'gemini-pro'로 바꿔보세요.
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-            
-            const payload = { 
-                contents: [{ parts: [{ text: prompt }] }] 
+        async function callGemini(prompt) {
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            const payload = {
+                contents: [{ parts: [{ text: prompt }] }],
+                systemInstruction: { parts: [{ text: "당신은 온양고등학교 AI 중점학교 입학 상담가입니다." }] }
             };
-            
             try {
-                const response = await fetch(url, { 
-                    method: 'POST', 
-                    headers: { 'Content-Type': 'application/json' }, 
-                    body: JSON.stringify(payload) 
-                });
+                const response = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
                 const result = await response.json();
-                
-                if (!response.ok) {
-                    console.error("API 에러 상세정보:", result);
-                    return `🚨 API 오류 발생: ${result.error?.message || response.statusText}`;
-                }
-
-                return result.candidates?.[0]?.content?.parts?.[0]?.text || "응답을 생성할 수 없습니다.";
-                
-            } catch (e) { 
-                console.error("통신 에러:", e);
-                return `🚨 네트워크 통신 오류: ${e.message}`; 
-            }
+                return result.candidates?.[0]?.content?.parts?.[0]?.text || "일시적 오류입니다.";
+            } catch (e) { return "연결 실패."; }
         }
 
 
